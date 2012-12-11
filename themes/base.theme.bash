@@ -489,3 +489,15 @@ function safe_append_prompt_command {
         fi
     fi
 }
+
+function theme_change () {
+  if [ "$1" == '--complete' ]; then
+    for d in $(find "${BASH_IT}/themes" -maxdepth 1 -type d -name "$3*" ! -iname "*themes"); do
+      echo ${d##*/};
+    done
+    exit
+  fi
+  sed -i '' 's/\(.*BASH_IT_THEME=\).*/\1"'$1'"/'  ~/.bash_profile
+  source ~/.bash_profile
+}
+complete -o default -C 'theme_change --complete $@' theme_change
