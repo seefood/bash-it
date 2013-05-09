@@ -496,8 +496,13 @@ function theme_change () {
       echo ${d##*/};
     done
     exit
+  elif [[ "$1" ]] ; then
+    sed -i 's/\(.*BASH_IT_THEME=\).*/\1"'$1'"/'  ~/.bash_profile
+    source ~/.bash_profile
+  else
+    echo "Usage: $0 THEME_NAME"
+    echo "Available themes:"
+    (cd ${BASH_IT}/themes ; \ls )
   fi
-  sed -i '' 's/\(.*BASH_IT_THEME=\).*/\1"'$1'"/'  ~/.bash_profile
-  source ~/.bash_profile
 }
 complete -o default -C 'theme_change --complete $@' theme_change
