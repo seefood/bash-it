@@ -99,7 +99,7 @@ prompt() {
     # nice prompt
     case "`id -u`" in
         0) PS1="${TITLEBAR}${BRACKET_COLOR}┌─$(clientp)[$my_ps_root${BRACKET_COLOR}@$my_ps_host${BRACKET_COLOR}]$(modern_scm_prompt)$(__my_rvm_ruby_version)${BRACKET_COLOR}[${STRING_COLOR}\w${BRACKET_COLOR}]$(is_vim_shell)
-            ${BRACKET_COLOR}└─$(lastret $ret)$(todo_txt_count)$(my_prompt_char)${normal}"
+${BRACKET_COLOR}└─$(lastret $ret)$(todo_txt_count)$(my_prompt_char)${normal}"
         ;;
         *) PS1="${TITLEBAR}${BRACKET_COLOR}┌─$(clientp)[$my_ps_user${BRACKET_COLOR}@$my_ps_host${BRACKET_COLOR}]$(modern_scm_prompt)$(__my_rvm_ruby_version)${BRACKET_COLOR}[${STRING_COLOR}\w${BRACKET_COLOR}]$(is_vim_shell)
 ${BRACKET_COLOR}└─$(lastret $ret)$(todo_txt_count)$(my_prompt_char)${normal}"
