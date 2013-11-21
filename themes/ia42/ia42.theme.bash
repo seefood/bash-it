@@ -14,6 +14,15 @@ SCM_GIT_CHAR="${STRING_COLOR}±${normal}"
 SCM_SVN_CHAR="${bold_cyan}⑆${normal}"
 SCM_HG_CHAR="${bold_red}☿${normal}"
 
+case $TERM in
+    xterm*|rxvt*)
+        TITLEBAR='\[\033]0;\u@\h:\w\007\]'
+        ;;
+    *)
+        TITLEBAR=""
+        ;;
+esac
+
 function clientp() {
     [[ "$clientprompt" ]] && \
         echo "[${STRING_COLOR}$clientprompt${BRACKET_COLOR}]"
@@ -28,15 +37,6 @@ function lastret () {
 
 #Mysql Prompt
 export MYSQL_PS1="(\u@\h) [\d]> "
-
-case $TERM in
-        xterm*)
-        TITLEBAR="\[\033]0;\w\007\]"
-        ;;
-        *)
-        TITLEBAR=""
-        ;;
-esac
 
 PS3=">> "
 
@@ -99,10 +99,10 @@ prompt() {
     # nice prompt
     case "`id -u`" in
         0) PS1="${TITLEBAR}${BRACKET_COLOR}┌─$(clientp)[$my_ps_root${BRACKET_COLOR}@$my_ps_host${BRACKET_COLOR}]$(modern_scm_prompt)$(__my_rvm_ruby_version)${BRACKET_COLOR}[${STRING_COLOR}\w${BRACKET_COLOR}]$(is_vim_shell)
-${BRACKET_COLOR}└─$(lastret $ret)$(my_prompt_char)${normal}"
+            ${BRACKET_COLOR}└─$(lastret $ret)$(todo_txt_count)$(my_prompt_char)${normal}"
         ;;
         *) PS1="${TITLEBAR}${BRACKET_COLOR}┌─$(clientp)[$my_ps_user${BRACKET_COLOR}@$my_ps_host${BRACKET_COLOR}]$(modern_scm_prompt)$(__my_rvm_ruby_version)${BRACKET_COLOR}[${STRING_COLOR}\w${BRACKET_COLOR}]$(is_vim_shell)
-${BRACKET_COLOR}└─$(lastret $ret)$(todo_txt_count)$(my_prompt_char)"
+${BRACKET_COLOR}└─$(lastret $ret)$(todo_txt_count)$(my_prompt_char)${normal}"
         ;;
     esac
 }
