@@ -498,6 +498,7 @@ function theme_change () {
     exit
   elif [[ "$1" ]] ; then
     sed -i 's/\(.*BASH_IT_THEME=\).*/\1"'$1'"/'  ~/.bash_profile
+    unset PS1 PROMPT_COMMAND
     source ~/.bash_profile
   else
     echo "Usage: $0 THEME_NAME"
