@@ -7,7 +7,8 @@ jobs:
   bats-test:
     strategy:
       matrix:
-        os: [ubuntu-24.04, macos-14]
+        #os: [ubuntu-24.04, macos-14]
+        os: [ubuntu-latest, macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -48,7 +49,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.8
+        python-version: 3.11
     - name: Install shfmt
       run: go install mvdan.cc/sh/v3/cmd/shfmt@latest
     - name: Install shellcheck
