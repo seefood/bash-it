@@ -18,7 +18,9 @@ jobs:
       run: brew install coreutils
     - name: Install parallel
       if: startsWith(runner.os, 'macOS')
-      run: brew install parallel
+      run: |
+        brew install parallel
+        which parallel  # Verify installation
     - name: Test code
       run: test/run
 
