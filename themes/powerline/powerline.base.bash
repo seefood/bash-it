@@ -290,6 +290,10 @@ function __powerline_prompt_command() {
 	local beginning_of_line='\[\e[G\]'
 	local info prompt_color segment prompt
 
+	# Reversed % marks where a missing trailing newline was; \r\e[K then
+	# clears the line so the prompt always starts cleanly at column 1.
+	printf '%b' '\e[7m%\e[0m\r\e[K'
+
 	local LEFT_PROMPT=""
 	local SEGMENTS_AT_LEFT=0
 	local LAST_SEGMENT_COLOR=""
