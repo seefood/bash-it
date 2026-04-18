@@ -1,4 +1,5 @@
 # shellcheck shell=bats
+# shellcheck disable=SC2034 # Variables consumed by externally-loaded powerline functions.
 
 load "${MAIN_BASH_IT_DIR?}/test/test_helper.bash"
 
