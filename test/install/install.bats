@@ -100,8 +100,8 @@ function local_setup_file() {
 	touch "$HOME/.profile"
 	echo "test file content" > "$HOME/.profile"
 
-	run ./install.sh --silent
-	echo "# DEBUG install output: $output" >&3
+	run bash -x ./install.sh --silent
+	echo "# DEBUG TRACE: $(printf '%s\n' "$output" | tail -25)" >&3
 	assert_success
 
 	assert_file_exist "$HOME/.profile"
