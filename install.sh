@@ -70,7 +70,7 @@ function _bash-it-install-ensure-bashrc-sourcing() {
 
 	if ((profile_exists)); then
 		# Check if already sourced (reuse helper from doctor)
-		if _bash-it-doctor-check-profile-sourcing-grep "$profile_file" 2> /dev/null; then
+		if _bash-it-doctor-check-profile-sourcing-grep "$profile_file"; then
 			return 0 # Already configured
 		fi
 	fi
