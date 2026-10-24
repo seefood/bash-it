@@ -100,6 +100,8 @@ function local_setup_file() {
 	touch "$HOME/.profile"
 	echo "test file content" > "$HOME/.profile"
 
+	run bash -c 'set -euo pipefail; f() { local x="$1"; [[ ! -f "$x" ]] && return 1; command grep -qE "zzz" "$x"; }; echo "ver=$BASH_VERSION"; if f "$1"; then echo yes; else echo no; fi; echo after' _ "$HOME/.profile"
+	echo "# DEBUG EXP: $(command -v bash) rc=$status :: $output" >&3
 	run bash -x ./install.sh --silent
 	echo "# DEBUG TRACE: $(printf '%s\n' "$output" | tail -25)" >&3
 	assert_success
