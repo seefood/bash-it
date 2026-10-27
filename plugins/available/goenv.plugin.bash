@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+cite about-plugin
 about-plugin 'load goenv, if you are using it'
 url "https://github.com/syndbg/goenv"
 
@@ -11,9 +12,9 @@ url "https://github.com/syndbg/goenv"
 # - Check if in $PATH already
 # - Check if installed manually to $GOENV_ROOT
 # - Check if installed manually to $HOME
-if ! _binary_exists goenv || ! [[ -n "${GOENV_ROOT:-}" && -x "$GOENV_ROOT/bin/goenv" ]] || ! [[ -x "$HOME/.goenv/bin/goenv" ]]; then
-	_log_warning "Unable to locate 'goenv'."
-	return 1
+if ! _binary_exists goenv && ! [[ -n "${GOENV_ROOT:-}" && -x "$GOENV_ROOT/bin/goenv" ]] && ! [[ -x "$HOME/.goenv/bin/goenv" ]]; then
+	_bash-it-plugin-self-disable goenv "Unable to locate 'goenv'."
+	return 0
 fi
 
 # Set GOENV_ROOT, if not already set

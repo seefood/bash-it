@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+cite about-plugin
 about-plugin 'load pyenv, if you are using it'
 url "https://github.com/pyenv/pyenv"
 
@@ -12,8 +13,8 @@ url "https://github.com/pyenv/pyenv"
 # - Check if installed manually to $PYENV_ROOT
 # - Check if installed manually to $HOME
 if ! _binary_exists pyenv && ! [[ -n "${PYENV_ROOT:-}" && -x "$PYENV_ROOT/bin/pyenv" ]] && ! [[ -x "$HOME/.pyenv/bin/pyenv" ]]; then
-	_log_warning "Unable to locate 'pyenv'."
-	return 1
+	_bash-it-plugin-self-disable pyenv "Unable to locate 'pyenv'."
+	return 0
 fi
 
 # Set PYENV_ROOT, if not already set

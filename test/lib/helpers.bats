@@ -191,6 +191,26 @@ function local_setup() {
 	assert [ ! -L "${BASH_IT?}/enabled/225---nvm.plugin.bash" ]
 }
 
+@test "helpers: _bash-it-plugin-self-disable warns and disables an enabled plugin" {
+	run _enable-plugin "nvm"
+	assert_link_exist "${BASH_IT?}/enabled/225---nvm.plugin.bash"
+
+	run _bash-it-plugin-self-disable "nvm" "Unable to locate 'nvm'."
+	assert_output --partial 'nvm disabled.'
+	assert [ ! -L "${BASH_IT?}/enabled/225---nvm.plugin.bash" ]
+}
+
+@test "helpers: a plugin whose binary is missing disables itself and loads cleanly" {
+	local plugin
+	_binary_exists() { return 1; }
+	for plugin in basher cht-sh direnv fasd fzf goenv hub less-pretty-cat nodenv percol plenv rbenv textmate thefuck zoxide; do
+		_enable-plugin "${plugin}" &> /dev/null
+		run source "${BASH_IT?}/plugins/available/${plugin}.plugin.bash"
+		assert_success
+		assert [ ! -L "${BASH_IT?}/enabled/"*"---${plugin}.plugin.bash" ]
+	done
+}
+
 @test "helpers: disable the nvm plugin if it was enabled with a priority, but in the component-specific directory" {
 	run ln -s "${BASH_IT?}/plugins/available/nvm.plugin.bash" "${BASH_IT?}/plugins/enabled/225---nvm.plugin.bash"
 	assert_link_exist "${BASH_IT?}/plugins/enabled/225---nvm.plugin.bash"
