@@ -77,3 +77,34 @@ function local_setup() {
 	run printf '%s' "${LEFT_PROMPT}"
 	assert_output --partial "38;5;7"
 }
+
+@test "powerline base: set_color treats an empty foreground as unset" {
+	run set_color "" 25
+	refute_output --partial "38;5;"
+	assert_output --partial "48;5;25"
+}
+
+@test "powerline base: set_color treats an empty background as unset" {
+	run set_color 25 ""
+	assert_output --partial "38;5;25"
+	refute_output --partial "48;5;"
+}
+
+@test "powerline base: __powerline_left_segment tolerates an empty segment text under set -u" {
+	set -u
+	__powerline_left_segment "|240"
+	set +u
+	run printf '%s' "${LEFT_PROMPT}"
+	assert_output --partial "48;5;240"
+}
+
+@test "powerline base: adjacent segments with the same color use the soft separator" {
+	POWERLINE_LEFT_SEPARATOR="HARD"
+	POWERLINE_LEFT_SEPARATOR_SOFT="SOFT"
+	__powerline_left_segment "a|240"
+	__powerline_left_segment "b|240"
+	__powerline_left_segment "c|32"
+	run printf '%s' "${LEFT_PROMPT}"
+	assert_output --partial "SOFT"
+	assert_output --partial "HARD"
+}
