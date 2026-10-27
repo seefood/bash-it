@@ -222,6 +222,7 @@ function local_setup() {
 	PATH="${BATS_TEST_TMPDIR}/bin:${PATH}"
 	export HOME="${BATS_TEST_TMPDIR}"
 	for plugin in basher direnv goenv hub jump nodenv plenv pyenv rbenv zoxide; do
+		# shellcheck disable=SC1090 # plugin path is dynamic
 		source "${BASH_IT?}/plugins/available/${plugin}.plugin.bash"
 		local var="_FAKE_INIT_${plugin}"
 		assert_equal "${!var-}" "ran"
