@@ -17,6 +17,10 @@ function __powerline_noop_prompt() { printf 'seg|32'; }
 function _save-and-reload-history() { :; }
 
 @test "powerline-plain theme: sources cleanly under set -u" {
+	# lib/preexec.bash expands precmd_functions[@] unguarded, which fails under set -u before bash 4.4.
+	if ((BASH_VERSINFO[0] * 100 + BASH_VERSINFO[1] < 404)); then
+		skip "bash ${BASH_VERSION} does not support set -u with empty arrays"
+	fi
 	run bash -uc '
 		for lib in log utilities helpers search colors preview preexec; do
 			source "${BASH_IT?}/lib/${lib}.bash"

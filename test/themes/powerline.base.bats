@@ -91,10 +91,16 @@ function local_setup() {
 }
 
 @test "powerline base: __powerline_left_segment tolerates an empty segment text under set -u" {
-	set -u
-	__powerline_left_segment "|240"
-	set +u
-	run printf '%s' "${LEFT_PROMPT}"
+	# Run in a child shell: `set -u` in the bats process itself breaks bats on bash 3.2.
+	run bash -c '
+		source "${BASH_IT?}/lib/colors.bash"
+		source "${BASH_IT?}/themes/powerline/powerline.base.bash"
+		set -u
+		LEFT_PROMPT="" SEGMENTS_AT_LEFT=0 LAST_SEGMENT_COLOR=""
+		__powerline_left_segment "|240"
+		printf "%s" "${LEFT_PROMPT}"
+	'
+	assert_success
 	assert_output --partial "48;5;240"
 }
 
