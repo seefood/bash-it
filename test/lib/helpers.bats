@@ -203,6 +203,7 @@ function local_setup() {
 @test "helpers: a plugin whose binary is missing disables itself and loads cleanly" {
 	local plugin
 	_binary_exists() { return 1; }
+	_command_exists() { return 1; }
 	for plugin in basher direnv fasd fzf goenv hub less-pretty-cat nodenv percol plenv rbenv textmate thefuck zoxide; do
 		_enable-plugin "${plugin}" &> /dev/null
 		run source "${BASH_IT?}/plugins/available/${plugin}.plugin.bash"
