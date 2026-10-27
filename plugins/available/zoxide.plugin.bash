@@ -8,5 +8,4 @@ if ! _binary_exists zoxide; then
 	return 0
 fi
 
-# shellcheck disable=SC1090
-source < <(zoxide init bash)
+eval "$(zoxide init bash)"

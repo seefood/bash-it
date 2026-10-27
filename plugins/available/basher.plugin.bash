@@ -14,5 +14,4 @@ if ! _command_exists basher; then
 	fi
 fi
 
-# shellcheck disable=SC1090
-source < <(basher init - bash)
+eval "$(basher init - bash)"

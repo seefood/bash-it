@@ -212,6 +212,22 @@ function local_setup() {
 	done
 }
 
+@test "helpers: plugins evaluate the init code printed by their tool" {
+	local plugin tool
+	mkdir -p "${BATS_TEST_TMPDIR}/bin"
+	for tool in basher direnv goenv hub jump nodenv plenv pyenv rbenv zoxide; do
+		printf '#!/bin/sh\necho "_FAKE_INIT_%s=ran"\n' "${tool}" > "${BATS_TEST_TMPDIR}/bin/${tool}"
+		chmod +x "${BATS_TEST_TMPDIR}/bin/${tool}"
+	done
+	PATH="${BATS_TEST_TMPDIR}/bin:${PATH}"
+	export HOME="${BATS_TEST_TMPDIR}"
+	for plugin in basher direnv goenv hub jump nodenv plenv pyenv rbenv zoxide; do
+		source "${BASH_IT?}/plugins/available/${plugin}.plugin.bash"
+		local var="_FAKE_INIT_${plugin}"
+		assert_equal "${!var-}" "ran"
+	done
+}
+
 @test "helpers: the cht-sh plugin disables itself when cht.sh is already installed" {
 	_binary_exists() { return 0; }
 	_enable-plugin "cht-sh" &> /dev/null

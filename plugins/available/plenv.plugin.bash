@@ -13,5 +13,5 @@ if ! _binary_exists plenv; then
 	return 0
 fi
 
-# shellcheck disable=SC1090 # init plenv
-source < <(plenv init - bash)
+# init plenv
+eval "$(plenv init - bash)"

@@ -26,8 +26,8 @@ if ! _command_exists goenv && [[ -x "$GOENV_ROOT/bin/goenv" ]]; then
 	pathmunge "$GOENV_ROOT/bin"
 fi
 
-# shellcheck disable=SC1090 # Initialize goenv
-source < <(goenv init - bash)
+# Initialize goenv
+eval "$(goenv init - bash)"
 
 # If moving to a directory with a goenv version set, reload the shell
 # to ensure the shell environment matches expectations.

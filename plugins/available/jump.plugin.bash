@@ -6,8 +6,7 @@ url "https://github.com/gsamokovarov/jump"
 
 function _bash-it-component-plugin-callback-on-init-jump() {
 	if _command_exists jump; then
-		# shellcheck disable=SC1090
-		source < <(jump shell bash ${JUMP_OPTS[@]+"${JUMP_OPTS[@]}"})
+		eval "$(jump shell bash ${JUMP_OPTS[@]+"${JUMP_OPTS[@]}"})"
 	fi
 }
 

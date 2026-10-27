@@ -28,11 +28,9 @@ fi
 
 # Initialize pyenv
 pathmunge "$PYENV_ROOT/shims"
-# shellcheck disable=SC1090
-source < <(pyenv init - bash)
+eval "$(pyenv init - bash)"
 
 # Load pyenv virtualenv if the virtualenv plugin is installed.
 if pyenv virtualenv-init - &> /dev/null; then
-	# shellcheck disable=SC1090
-	source < <(pyenv virtualenv-init - bash)
+	eval "$(pyenv virtualenv-init - bash)"
 fi

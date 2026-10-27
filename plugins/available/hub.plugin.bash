@@ -8,5 +8,4 @@ if ! _binary_exists hub; then
 	return 0
 fi
 
-# shellcheck disable=SC1090
-source < <(hub alias -s)
+eval "$(hub alias -s)"

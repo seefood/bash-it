@@ -13,5 +13,4 @@ if ! _binary_exists nodenv; then
 	return 0
 fi
 
-# shellcheck disable=SC1090
-source < <(nodenv init - bash)
+eval "$(nodenv init - bash)"

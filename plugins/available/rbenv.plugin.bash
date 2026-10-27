@@ -12,5 +12,4 @@ if ! _binary_exists rbenv; then
 	return 0
 fi
 
-# shellcheck disable=SC1090
-source < <(rbenv init - bash)
+eval "$(rbenv init - bash)"
