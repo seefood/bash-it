@@ -203,12 +203,20 @@ function local_setup() {
 @test "helpers: a plugin whose binary is missing disables itself and loads cleanly" {
 	local plugin
 	_binary_exists() { return 1; }
-	for plugin in basher cht-sh direnv fasd fzf goenv hub less-pretty-cat nodenv percol plenv rbenv textmate thefuck zoxide; do
+	for plugin in basher direnv fasd fzf goenv hub less-pretty-cat nodenv percol plenv rbenv textmate thefuck zoxide; do
 		_enable-plugin "${plugin}" &> /dev/null
 		run source "${BASH_IT?}/plugins/available/${plugin}.plugin.bash"
 		assert_success
 		assert [ ! -L "${BASH_IT?}/enabled/"*"---${plugin}.plugin.bash" ]
 	done
+}
+
+@test "helpers: the cht-sh plugin disables itself when cht.sh is already installed" {
+	_binary_exists() { return 0; }
+	_enable-plugin "cht-sh" &> /dev/null
+	run source "${BASH_IT?}/plugins/available/cht-sh.plugin.bash"
+	assert_success
+	assert [ ! -L "${BASH_IT?}/enabled/"*"---cht-sh.plugin.bash" ]
 }
 
 @test "helpers: disable the nvm plugin if it was enabled with a priority, but in the component-specific directory" {
